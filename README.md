@@ -1,5 +1,7 @@
 # Wonderboom Nature Reserve Website
 
+![Wonderboom Nature Reserve Logo](https://res.cloudinary.com/dgwtaivvf/image/upload/v1773396465/wblogo_sv29cf.png)
+
 Single-page promotional website for Wonderboom Nature Reserve.
 
 ## Overview
