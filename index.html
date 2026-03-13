@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wonderboom Nature Reserve</title>
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dgwtaivvf/image/upload/v1773396464/wblogo_icon_rt0px7.png">
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,11 +18,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --tone-olive: #8b8826;
+            --tone-khaki: #b5b241;
+            --tone-blue: #255ea1;
+            --tone-lime: #b4b514;
+            --tone-clay: #c85b33;
+            --tone-mist: #d9d9d9;
+            --tone-moss: #697018;
+            --tone-sage: #64756b;
+            --tone-forest: #40531f;
+        }
+
         html, body {
-            background-color: #F2F0E9;
-            color: #1A1A1A;
+            background-color: var(--tone-mist);
+            color: var(--tone-forest);
             scroll-behavior: smooth;
             font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        ::selection {
+            background-color: var(--tone-clay);
+            color: var(--tone-mist);
         }
         
         /* Global SVG Noise Overlay */
@@ -37,9 +55,9 @@
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1A1A1A; }
-        ::-webkit-scrollbar-thumb { background: #2E4036; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #CC5833; }
+        ::-webkit-scrollbar-track { background: var(--tone-forest); }
+        ::-webkit-scrollbar-thumb { background: var(--tone-blue); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--tone-clay); }
 
         /* Internal animations */
         @keyframes scan {
@@ -104,36 +122,83 @@
             height: 100%;
             width: 100%;
             transform: translateY(100%);
-            background-color: #1A1A1A;
+            background-color: var(--tone-forest);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .magnetic-btn:hover .magnetic-btn-bg {
             transform: translateY(0);
         }
 
-        .btn-moss { background-color: #2E4036; color: white; }
-        .btn-clay { background-color: #CC5833; color: white; }
-        .btn-outline { background-color: white; color: #1A1A1A; border: 1px solid rgba(26,26,26,0.1); }
+        .btn-moss { background-color: var(--tone-blue); color: var(--tone-mist); }
+        .btn-clay { background-color: var(--tone-clay); color: var(--tone-mist); }
+        .btn-outline { background-color: var(--tone-mist); color: var(--tone-forest); border: 1px solid rgba(64,83,31,0.16); }
+
+        @keyframes weather-float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes weather-pulse {
+            0%, 100% { box-shadow: 0 14px 28px rgba(0,0,0,0.08); }
+            50% { box-shadow: 0 20px 36px rgba(0,0,0,0.16); }
+        }
+
+        @keyframes weather-glow {
+            0%, 100% { opacity: 0.9; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.06); }
+        }
+
+        @keyframes weather-shift {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(4px); }
+        }
+
+        .weather-card-loop {
+            animation: weather-float 6s ease-in-out infinite;
+        }
+
+        .weather-card-loop-delayed {
+            animation: weather-float 7.5s ease-in-out infinite;
+            animation-delay: 0.8s;
+        }
+
+        .weather-icon-loop {
+            animation: weather-glow 4.2s ease-in-out infinite;
+            transform-origin: center;
+        }
+
+        .weather-highlight-loop {
+            animation: weather-pulse 4.5s ease-in-out infinite;
+        }
+
+        .weather-row-loop {
+            animation: weather-shift 5.5s ease-in-out infinite;
+        }
     </style>
 </head>
-<body class="selection:bg-[#CC5833] selection:text-white antialiased">
+<body class="antialiased">
 
     <!-- Noise Overlay -->
     <div class="noise-overlay"></div>
 
     <!-- Navbar -->
-    <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full px-6 py-3 flex items-center justify-between w-[95%] max-w-6xl bg-transparent text-white border border-transparent">
-        <div class="flex items-center gap-2">
-            <i data-lucide="leaf" id="nav-icon" class="w-6 h-6 text-white transition-colors duration-500"></i>
-            <span class="font-['Outfit'] font-bold text-2xl tracking-tighter">WONDERBOOM</span>
+    <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full px-6 py-3 flex items-center justify-between w-[95%] max-w-6xl bg-transparent text-[#D9D9D9] border border-transparent">
+        <div class="flex items-center">
+            <img
+                id="nav-logo"
+                src="https://res.cloudinary.com/dgwtaivvf/image/upload/v1773396465/wblogo_sv29cf.png"
+                alt="Wonderboom Nature Reserve logo"
+                class="h-12 w-auto object-contain"
+            >
         </div>
         <div class="hidden md:flex gap-8 font-['Plus_Jakarta_Sans'] font-medium text-sm tracking-tight" id="nav-links">
-            <a href="#highlights" class="hover:text-[#CC5833] transition-colors">Highlights</a>
-            <a href="#legend" class="hover:text-[#CC5833] transition-colors">The Legend</a>
-            <a href="#gallery" class="hover:text-[#CC5833] transition-colors">Reserve</a>
-            <a href="#tariffs" class="hover:text-[#CC5833] transition-colors">Tariffs</a>
+            <a href="#highlights" class="hover:text-[#B4B514] transition-colors">Highlights</a>
+            <a href="#legend" class="hover:text-[#B4B514] transition-colors">The Legend</a>
+            <a href="#gallery-section" class="hover:text-[#B4B514] transition-colors">Reserve</a>
+            <a href="#weather" class="hover:text-[#B4B514] transition-colors">Weather</a>
+            <a href="#tariffs" class="hover:text-[#B4B514] transition-colors">Tariffs</a>
         </div>
-        <button id="nav-btn" class="px-6 py-2.5 rounded-full font-['Plus_Jakarta_Sans'] font-semibold text-sm transition-all duration-300 hover:scale-105 bg-white text-[#1A1A1A]">
+        <button id="nav-btn" class="px-6 py-2.5 rounded-full font-['Plus_Jakarta_Sans'] font-semibold text-sm transition-all duration-300 hover:scale-105 bg-[#D9D9D9] text-[#40531F]">
             Plan a Visit
         </button>
     </nav>
@@ -142,21 +207,21 @@
         <!-- Hero Section -->
         <section class="relative h-[100dvh] flex flex-col justify-end p-6 md:p-16 overflow-hidden rounded-b-[3rem] md:rounded-b-[4rem]">
             <div class="absolute inset-0 bg-cover bg-center z-0 scale-105 transform origin-bottom" style="background-image: url('https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&q=80');"></div>
-            <div class="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] via-[#2E4036]/80 to-transparent z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#40531F] via-[#40531F]/45 to-transparent z-10"></div>
             
             <div class="relative z-20 w-full max-w-7xl mx-auto mb-12 md:mb-24">
                 <div class="overflow-hidden mb-2">
-                    <h1 class="animate-fade-up delay-100 font-['Plus_Jakarta_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl text-white tracking-tighter leading-none">
+                    <h1 class="animate-fade-up delay-100 font-['Plus_Jakarta_Sans'] font-bold text-5xl md:text-7xl lg:text-8xl text-[#D9D9D9] tracking-tighter leading-none">
                         The Legend of
                     </h1>
                 </div>
                 <div class="overflow-hidden mb-8">
-                    <h1 class="animate-fade-up delay-300 font-['Cormorant_Garamond'] italic text-7xl md:text-8xl lg:text-[10rem] text-[#CC5833] tracking-tight leading-none pr-8">
+                    <h1 class="animate-fade-up delay-300 font-['Cormorant_Garamond'] italic text-7xl md:text-8xl lg:text-[10rem] text-[#C85B33] tracking-tight leading-none pr-8">
                         Wonderboom.
                     </h1>
                 </div>
                 
-                <div class="animate-fade-up delay-1000 flex flex-col md:flex-row gap-8 items-start md:items-center max-w-2xl text-white/80">
+                <div class="animate-fade-up delay-1000 flex flex-col md:flex-row gap-8 items-start md:items-center max-w-2xl text-[#D9D9D9]/80">
                     <p class="font-['Plus_Jakarta_Sans'] text-lg md:text-xl font-light leading-relaxed">
                         A majestic 200-hectare sanctuary straddling the Magaliesberg. Home to a magnificent Ficus salicifolia older than 1,000 years.
                     </p>
@@ -171,61 +236,61 @@
         <!-- Highlights Section -->
         <section id="highlights" class="py-24 md:py-32 px-6 max-w-7xl mx-auto">
             <div class="mb-16 md:mb-24">
-                <h2 class="font-['Cormorant_Garamond'] italic text-[#2E4036] text-5xl md:text-7xl mb-4">Reserve Highlights</h2>
-                <p class="font-['Plus_Jakarta_Sans'] text-[#1A1A1A]/70 text-lg max-w-xl">
+                <h2 class="font-['Cormorant_Garamond'] italic text-[#255EA1] text-5xl md:text-7xl mb-4">Reserve Highlights</h2>
+                <p class="font-['Plus_Jakarta_Sans'] text-[#40531F]/70 text-lg max-w-xl">
                     Discover the ancient history, majestic flora, and crucial operational parameters of Tshwane's most renowned natural heritage site.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Card 1: Tree Stats Shuffler -->
-                <div class="bg-[#F2F0E9] rounded-[3rem] p-8 border border-[#1A1A1A]/5 hover:border-[#2E4036]/20 transition-colors">
-                    <h3 class="font-['Outfit'] text-2xl font-bold text-[#1A1A1A] mb-2">The Ancient Fig</h3>
-                    <p class="font-['Plus_Jakarta_Sans'] text-sm text-[#1A1A1A]/60">A millennium of growth and natural history.</p>
+                <div class="bg-[#B5B241] rounded-[3rem] p-8 border border-[#40531F]/10 hover:border-[#255EA1]/30 transition-colors">
+                    <h3 class="font-['Outfit'] text-2xl font-bold text-[#40531F] mb-2">The Ancient Fig</h3>
+                    <p class="font-['Plus_Jakarta_Sans'] text-sm text-[#40531F]/60">A millennium of growth and natural history.</p>
                     
                     <div class="relative h-[220px] w-full mt-8" id="shuffler-container">
                         <!-- Shuffler Cards will be managed by JS -->
-                        <div class="shuffler-card absolute left-0 right-0 bg-white rounded-[2rem] p-6 shadow-sm border border-[#1A1A1A]/5 transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+                        <div class="shuffler-card absolute left-0 right-0 bg-[#D9D9D9] rounded-[2rem] p-6 shadow-sm border border-[#40531F]/10 transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]">
                             <div class="flex justify-between items-center mb-4">
-                                <span class="card-label font-['JetBrains_Mono'] text-xs text-[#1A1A1A]/50 uppercase tracking-widest">Ficus Salicifolia</span>
-                                <i data-lucide="trees" class="w-4 h-4 text-[#CC5833]"></i>
+                                <span class="card-label font-['JetBrains_Mono'] text-xs text-[#40531F]/50 uppercase tracking-widest">Ficus Salicifolia</span>
+                                <i data-lucide="trees" class="w-4 h-4 text-[#C85B33]"></i>
                             </div>
                             <div class="flex items-end justify-between">
                                 <span class="card-val font-['Outfit'] font-bold text-3xl">1,000+ yrs</span>
-                                <span class="card-delta font-['Plus_Jakarta_Sans'] font-semibold text-sm text-[#2E4036]">Ancient Age</span>
+                                <span class="card-delta font-['Plus_Jakarta_Sans'] font-semibold text-sm text-[#255EA1]">Ancient Age</span>
                             </div>
                         </div>
-                        <div class="shuffler-card absolute left-0 right-0 bg-white rounded-[2rem] p-6 shadow-sm border border-[#1A1A1A]/5 transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+                        <div class="shuffler-card absolute left-0 right-0 bg-[#D9D9D9] rounded-[2rem] p-6 shadow-sm border border-[#40531F]/10 transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]">
                             <div class="flex justify-between items-center mb-4">
-                                <span class="card-label font-['JetBrains_Mono'] text-xs text-[#1A1A1A]/50 uppercase tracking-widest">Reserve Scale</span>
-                                <i data-lucide="trees" class="w-4 h-4 text-[#CC5833]"></i>
+                                <span class="card-label font-['JetBrains_Mono'] text-xs text-[#40531F]/50 uppercase tracking-widest">Reserve Scale</span>
+                                <i data-lucide="trees" class="w-4 h-4 text-[#C85B33]"></i>
                             </div>
                             <div class="flex items-end justify-between">
                                 <span class="card-val font-['Outfit'] font-bold text-3xl">200 HA</span>
-                                <span class="card-delta font-['Plus_Jakarta_Sans'] font-semibold text-sm text-green-700">Tshwane North</span>
+                                <span class="card-delta font-['Plus_Jakarta_Sans'] font-semibold text-sm text-[#697018]">Tshwane North</span>
                             </div>
                         </div>
-                        <div class="shuffler-card absolute left-0 right-0 bg-white rounded-[2rem] p-6 shadow-sm border border-[#1A1A1A]/5 transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+                        <div class="shuffler-card absolute left-0 right-0 bg-[#D9D9D9] rounded-[2rem] p-6 shadow-sm border border-[#40531F]/10 transition-all duration-[800ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]">
                             <div class="flex justify-between items-center mb-4">
-                                <span class="card-label font-['JetBrains_Mono'] text-xs text-[#1A1A1A]/50 uppercase tracking-widest">Daughter Trees</span>
-                                <i data-lucide="trees" class="w-4 h-4 text-[#CC5833]"></i>
+                                <span class="card-label font-['JetBrains_Mono'] text-xs text-[#40531F]/50 uppercase tracking-widest">Daughter Trees</span>
+                                <i data-lucide="trees" class="w-4 h-4 text-[#C85B33]"></i>
                             </div>
                             <div class="flex items-end justify-between">
                                 <span class="card-val font-['Outfit'] font-bold text-3xl">3 Circles</span>
-                                <span class="card-delta font-['Plus_Jakarta_Sans'] font-semibold text-sm text-[#CC5833]">Rooted Canopies</span>
+                                <span class="card-delta font-['Plus_Jakarta_Sans'] font-semibold text-sm text-[#C85B33]">Rooted Canopies</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Card 2: Location & Hours -->
-                <div class="bg-[#F2F0E9] rounded-[3rem] p-8 border border-[#1A1A1A]/5 hover:border-[#2E4036]/20 transition-colors flex flex-col">
-                    <h3 class="font-['Outfit'] text-2xl font-bold text-[#1A1A1A] mb-2">Location & Hours</h3>
-                    <p class="font-['Plus_Jakarta_Sans'] text-sm text-[#1A1A1A]/60">Navigate to the reserve and check entry times.</p>
+                <div class="bg-[#B5B241] rounded-[3rem] p-8 border border-[#40531F]/10 hover:border-[#255EA1]/30 transition-colors flex flex-col">
+                    <h3 class="font-['Outfit'] text-2xl font-bold text-[#40531F] mb-2">Location & Hours</h3>
+                    <p class="font-['Plus_Jakarta_Sans'] text-sm text-[#40531F]/60">Navigate to the reserve and check entry times.</p>
                     
                     <div class="mt-6 flex-grow flex flex-col gap-3">
                         <!-- Google Maps Embed -->
-                        <div class="w-full h-[150px] rounded-[1.5rem] overflow-hidden border border-[#1A1A1A]/10 shadow-sm relative">
+                        <div class="w-full h-[150px] rounded-[1.5rem] overflow-hidden border border-[#40531F]/10 shadow-sm relative">
                             <iframe 
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14376.541300971512!2d28.1824148!3d-25.6888636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e956108169991eb%3A0x6a2c90fb1cf92318!2sWonderboom%20Nature%20Reserve!5e0!3m2!1sen!2sza!4v1700000000000!5m2!1sen!2sza" 
                                 width="100%" 
@@ -237,12 +302,12 @@
                             </iframe>
                         </div>
                         <!-- Hours -->
-                        <div class="bg-white rounded-[1.5rem] p-4 border border-[#1A1A1A]/5 shadow-sm text-sm font-['Plus_Jakarta_Sans']">
+                        <div class="bg-[#D9D9D9] rounded-[1.5rem] p-4 border border-[#40531F]/10 shadow-sm text-sm font-['Plus_Jakarta_Sans']">
                             <div class="flex justify-between items-center mb-1">
-                                <span class="font-bold text-[#1A1A1A]">Daily Hours</span>
-                                <span class="font-['JetBrains_Mono'] font-bold text-[#CC5833] text-xs">07:00 - 17:00</span>
+                                <span class="font-bold text-[#40531F]">Daily Hours</span>
+                                <span class="font-['JetBrains_Mono'] font-bold text-[#C85B33] text-xs">07:00 - 17:00</span>
                             </div>
-                            <div class="flex justify-between items-center text-[#1A1A1A]/60 text-xs">
+                            <div class="flex justify-between items-center text-[#40531F]/60 text-xs">
                                 <span>Last Entrance</span>
                                 <span class="font-['JetBrains_Mono']">16:00</span>
                             </div>
@@ -251,34 +316,34 @@
                 </div>
 
                 <!-- Card 3: Booking Scheduler -->
-                <div class="bg-[#F2F0E9] rounded-[3rem] p-8 border border-[#1A1A1A]/5 hover:border-[#2E4036]/20 transition-colors">
-                    <h3 class="font-['Outfit'] text-2xl font-bold text-[#1A1A1A] mb-2">Facilities</h3>
-                    <p class="font-['Plus_Jakarta_Sans'] text-sm text-[#1A1A1A]/60">Secure the Wonderboom Lapa or a Trail Guide.</p>
+                <div class="bg-[#B5B241] rounded-[3rem] p-8 border border-[#40531F]/10 hover:border-[#255EA1]/30 transition-colors">
+                    <h3 class="font-['Outfit'] text-2xl font-bold text-[#40531F] mb-2">Facilities</h3>
+                    <p class="font-['Plus_Jakarta_Sans'] text-sm text-[#40531F]/60">Secure the Wonderboom Lapa or a Trail Guide.</p>
                     
-                    <div class="mt-8 bg-white rounded-[2rem] p-6 h-[220px] border border-[#1A1A1A]/5 shadow-sm relative">
-                        <div class="font-['JetBrains_Mono'] text-xs text-[#1A1A1A]/50 uppercase tracking-widest mb-6">Lapa & Guide Booking</div>
+                    <div class="mt-8 bg-[#D9D9D9] rounded-[2rem] p-6 h-[220px] border border-[#40531F]/10 shadow-sm relative">
+                        <div class="font-['JetBrains_Mono'] text-xs text-[#40531F]/50 uppercase tracking-widest mb-6">Lapa & Guide Booking</div>
                         
                         <div class="flex justify-between mb-8" id="scheduler-days">
-                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#1A1A1A]/10 text-[#1A1A1A]">S</div>
-                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#1A1A1A]/10 text-[#1A1A1A]">M</div>
-                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#1A1A1A]/10 text-[#1A1A1A]">T</div>
-                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#1A1A1A]/10 text-[#1A1A1A]">W</div>
-                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#1A1A1A]/10 text-[#1A1A1A]">T</div>
-                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#1A1A1A]/10 text-[#1A1A1A]">F</div>
-                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#1A1A1A]/10 text-[#1A1A1A]">S</div>
+                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#40531F]/10 text-[#40531F]">S</div>
+                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#40531F]/10 text-[#40531F]">M</div>
+                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#40531F]/10 text-[#40531F]">T</div>
+                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#40531F]/10 text-[#40531F]">W</div>
+                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#40531F]/10 text-[#40531F]">T</div>
+                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#40531F]/10 text-[#40531F]">F</div>
+                            <div class="scheduler-day w-8 h-8 rounded-full flex items-center justify-center font-['Plus_Jakarta_Sans'] text-sm font-semibold transition-all duration-200 border border-transparent hover:border-[#40531F]/10 text-[#40531F]">S</div>
                         </div>
 
                         <div class="flex justify-between items-center">
-                            <span class="font-['JetBrains_Mono'] text-[10px] uppercase text-[#CC5833] max-w-[80px]">14 Days Advance</span>
-                            <button id="scheduler-btn" class="px-4 py-2 rounded-full border border-[#1A1A1A]/10 font-['Plus_Jakarta_Sans'] text-xs font-semibold transition-all duration-200">
+                            <span class="font-['JetBrains_Mono'] text-[10px] uppercase text-[#C85B33] max-w-[80px]">14 Days Advance</span>
+                            <button id="scheduler-btn" class="px-4 py-2 rounded-full border border-[#40531F]/10 font-['Plus_Jakarta_Sans'] text-xs font-semibold transition-all duration-200">
                                 Request Booking
                             </button>
                         </div>
 
                         <!-- SVG Cursor -->
-                        <div id="scheduler-cursor" class="absolute top-0 left-0 w-6 h-6 z-50 pointer-events-none transition-all ease-[cubic-bezier(0.34,1.56,0.64,1)]" style="filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); opacity: 0; transform: translate(0px, 0px);">
+                        <div id="scheduler-cursor" class="absolute top-0 left-0 w-6 h-6 z-50 pointer-events-none transition-all ease-[cubic-bezier(0.34,1.56,0.64,1)]" style="filter: drop-shadow(0 4px 4px rgba(64,83,31,0.2)); opacity: 0; transform: translate(0px, 0px);">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5.5 3.21V20.8C5.5 21.46 6.27 21.82 6.78 21.4L11.08 17.61C11.31 17.41 11.61 17.3 11.92 17.3H18.5C19.18 17.3 19.54 16.49 19.09 15.99L5.5 3.21Z" fill="#1A1A1A" stroke="white" stroke-width="1.5"/>
+                                <path d="M5.5 3.21V20.8C5.5 21.46 6.27 21.82 6.78 21.4L11.08 17.61C11.31 17.41 11.61 17.3 11.92 17.3H18.5C19.18 17.3 19.54 16.49 19.09 15.99L5.5 3.21Z" fill="#40531F" stroke="#D9D9D9" stroke-width="1.5"/>
                             </svg>
                         </div>
                     </div>
@@ -287,18 +352,18 @@
         </section>
 
         <!-- The Legend Section -->
-        <section id="legend" class="relative py-40 px-6 overflow-hidden bg-[#1A1A1A] text-white rounded-[3rem] md:rounded-[4rem] mx-4 md:mx-8 my-12">
-            <div id="legend-bg" class="absolute inset-0 bg-cover bg-center opacity-30 scale-125" style="background-image: url('https://images.unsplash.com/photo-1469122312224-c5846569feb1?auto=format&fit=crop&q=80'); transition: transform 0.1s linear;"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-[#1A1A1A] via-transparent to-[#1A1A1A]"></div>
+        <section id="legend" class="relative py-40 px-6 overflow-hidden bg-[#40531F] text-[#D9D9D9] rounded-[3rem] md:rounded-[4rem] mx-4 md:mx-8 my-12">
+            <div id="legend-bg" class="absolute inset-0 bg-cover bg-center opacity-30 scale-125" style="background-image: url('img/naturereserve tree.png'); transition: transform 0.1s linear;"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-[#40531F] via-transparent to-[#40531F]"></div>
             
             <div class="relative z-10 max-w-5xl mx-auto text-center">
                 <div class="overflow-hidden mb-6">
-                    <h2 class="reveal-on-scroll font-['Plus_Jakarta_Sans'] text-3xl md:text-5xl font-medium tracking-tight text-white/60">
-                        Some see a tree. <br class="md:hidden" /><span class="text-white">We see a legacy.</span>
+                    <h2 class="reveal-on-scroll font-['Plus_Jakarta_Sans'] text-3xl md:text-5xl font-medium tracking-tight text-[#D9D9D9]/60">
+                        Some see a tree. <br class="md:hidden" /><span class="text-[#D9D9D9]">We see a legacy.</span>
                     </h2>
                 </div>
                 <div class="overflow-hidden">
-                    <h2 class="reveal-on-scroll delay-300 font-['Cormorant_Garamond'] italic text-6xl md:text-8xl lg:text-9xl text-[#CC5833]">
+                    <h2 class="reveal-on-scroll delay-300 font-['Cormorant_Garamond'] italic text-6xl md:text-8xl lg:text-9xl text-[#C85B33]">
                         1,000 years of history.
                     </h2>
                 </div>
@@ -306,34 +371,34 @@
         </section>
 
         <!-- Parallax Gallery -->
-        <section id="gallery-section" class="relative h-[300vh] bg-[#F2F0E9] w-full z-10">
+        <section id="gallery-section" class="relative h-[300vh] bg-[#D9D9D9] w-full z-10">
             <div class="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
 
-                <div class="absolute top-24 md:top-32 left-8 md:left-16 z-20 pointer-events-none text-[#1A1A1A]">
+                <div class="absolute top-24 md:top-32 left-8 md:left-16 z-20 pointer-events-none text-[#40531F]">
                     <span class="font-['JetBrains_Mono'] uppercase tracking-widest text-xs mb-4 block opacity-60">04 // The Reserve</span>
                     <h2 class="font-['Cormorant_Garamond'] italic text-5xl md:text-7xl lg:text-8xl">Magaliesberg<br/>Landscapes</h2>
                 </div>
 
                 <div id="gallery-container" class="flex gap-8 md:gap-16 h-full w-max items-center px-[50vw]" style="will-change: transform;">
                     <!-- Image 1 -->
-                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#1A1A1A]/5">
-                        <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&q=80" alt="Reserve rendering 1" class="gallery-img absolute top-0 -left-[12.5%] w-[125%] h-full object-cover" style="will-change: transform;" draggable="false">
+                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#40531F]/10">
+                        <img src="img/hikingview1.png" alt="Wonderboom hiking trail view" class="gallery-img absolute inset-0 w-full h-full object-cover" style="will-change: transform;" draggable="false">
                     </div>
                     <!-- Image 2 -->
-                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#1A1A1A]/5">
-                        <img src="https://images.unsplash.com/photo-1547471080-7fc2caa6c281?auto=format&fit=crop&q=80" alt="Reserve rendering 2" class="gallery-img absolute top-0 -left-[12.5%] w-[125%] h-full object-cover" style="will-change: transform;" draggable="false">
+                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#40531F]/10">
+                        <img src="img/hikingview2.png" alt="Trail landscape in Wonderboom Nature Reserve" class="gallery-img absolute inset-0 w-full h-full object-cover" style="will-change: transform;" draggable="false">
                     </div>
                     <!-- Image 3 -->
-                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#1A1A1A]/5">
-                        <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&q=80" alt="Reserve rendering 3" class="gallery-img absolute top-0 -left-[12.5%] w-[125%] h-full object-cover" style="will-change: transform;" draggable="false">
+                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#40531F]/10">
+                        <img src="img/hikingview3.png" alt="Wonderboom ridge and trail view" class="gallery-img absolute inset-0 w-full h-full object-cover" style="will-change: transform;" draggable="false">
                     </div>
                     <!-- Image 4 -->
-                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#1A1A1A]/5">
-                        <img src="https://images.unsplash.com/photo-1521651201144-634f700b36ef?auto=format&fit=crop&q=80" alt="Reserve rendering 4" class="gallery-img absolute top-0 -left-[12.5%] w-[125%] h-full object-cover" style="will-change: transform;" draggable="false">
+                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#40531F]/10">
+                        <img src="img/hikingview4.png" alt="Wonderboom panoramic hiking route" class="gallery-img absolute inset-0 w-full h-full object-cover" style="will-change: transform;" draggable="false">
                     </div>
                     <!-- Image 5 -->
-                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#1A1A1A]/5">
-                        <img src="https://images.unsplash.com/photo-1523528283115-9bf9b1699245?auto=format&fit=crop&q=80" alt="Reserve rendering 5" class="gallery-img absolute top-0 -left-[12.5%] w-[125%] h-full object-cover" style="will-change: transform;" draggable="false">
+                    <div class="relative overflow-hidden h-[50vh] md:h-[65vh] aspect-[4/3] shrink-0 rounded-[2rem] md:rounded-[3rem] shadow-2xl border border-[#40531F]/10">
+                        <img src="img/visitors1.png" alt="Visitors enjoying Wonderboom Nature Reserve" class="gallery-img absolute inset-0 w-full h-full object-cover" style="will-change: transform;" draggable="false">
                     </div>
                 </div>
             </div>
@@ -344,77 +409,315 @@
             
             <!-- Card 1 -->
             <div class="protocol-card sticky top-0 h-[100dvh] flex items-center justify-center p-4 md:p-8">
-                <div class="card-inner w-full max-w-6xl h-[85vh] md:h-[80vh] bg-[#2E4036] text-white rounded-[3rem] md:rounded-[4rem] overflow-hidden relative flex flex-col md:flex-row shadow-2xl border border-white/10" style="transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear;">
+                <div class="card-inner w-full max-w-6xl h-[85vh] md:h-[80vh] bg-[#255EA1] text-[#D9D9D9] rounded-[3rem] md:rounded-[4rem] overflow-hidden relative flex flex-col md:flex-row shadow-2xl border border-[#D9D9D9]/15" style="transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear;">
                     <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center z-10">
                         <span class="font-['JetBrains_Mono'] uppercase tracking-widest text-sm mb-6 opacity-60">Chapter 01</span>
                         <h3 class="font-['Outfit'] font-bold text-4xl md:text-6xl mb-6 leading-tight">The Sacred Roots</h3>
                         <p class="font-['Plus_Jakarta_Sans'] text-lg md:text-xl opacity-80 leading-relaxed max-w-md">Legend says the tree grew to its magnificent scale because an indigenous chief lies buried beneath its roots. It once shaded 22 ox wagons simultaneously.</p>
                     </div>
-                    <div class="w-full md:w-1/2 h-full relative border-l border-white/5 flex items-center justify-center">
-                        <svg class="w-48 h-48 animate-[spin_10s_linear_infinite]" viewBox="0 0 200 200" fill="none">
-                            <circle cx="100" cy="100" r="80" stroke="#CC5833" stroke-width="2" stroke-dasharray="10 10"/>
-                            <circle cx="100" cy="100" r="60" stroke="white" stroke-width="1" stroke-dasharray="4 8" class="animate-[spin_15s_linear_infinite_reverse] origin-center"/>
-                            <circle cx="100" cy="100" r="40" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-dasharray="6 6"/>
-                            <path d="M100 20 L100 180 M20 100 L180 100 M45 45 L155 155 M45 155 L155 45" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-                        </svg>
+                    <div class="w-full md:w-1/2 h-full relative border-l border-[#D9D9D9]/10 overflow-hidden">
+                        <img src="img/wonderboom fort.png" alt="Fort Wonderboompoort" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#255EA1] via-[#255EA1]/10 to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 right-8 rounded-[1.75rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/15 p-5">
+                            <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#D9D9D9]/60 mb-2">Fort View</div>
+                            <div class="font-['Plus_Jakarta_Sans'] text-sm text-[#D9D9D9]/80">A steep but rewarding climb leads to the historic fort and one of the reserve's signature viewpoints.</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Card 2 -->
             <div class="protocol-card sticky top-0 h-[100dvh] flex items-center justify-center p-4 md:p-8">
-                <div class="card-inner w-full max-w-6xl h-[85vh] md:h-[80vh] bg-[#1A1A1A] text-white rounded-[3rem] md:rounded-[4rem] overflow-hidden relative flex flex-col md:flex-row shadow-2xl border border-white/10" style="transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear;">
+                <div class="card-inner w-full max-w-6xl h-[85vh] md:h-[80vh] bg-[#64756B] text-[#D9D9D9] rounded-[3rem] md:rounded-[4rem] overflow-hidden relative flex flex-col md:flex-row shadow-2xl border border-[#D9D9D9]/15" style="transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear;">
                     <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center z-10">
                         <span class="font-['JetBrains_Mono'] uppercase tracking-widest text-sm mb-6 opacity-60">Chapter 02</span>
                         <h3 class="font-['Outfit'] font-bold text-4xl md:text-6xl mb-6 leading-tight">Resilience & Rebirth</h3>
                         <p class="font-['Plus_Jakarta_Sans'] text-lg md:text-xl opacity-80 leading-relaxed max-w-md">Following a devastating fire in 1870 and a 20-year quarantine, its long branches drooped, rooted into the earth, and produced three rings of daughter trees.</p>
                     </div>
-                    <div class="w-full md:w-1/2 h-full relative border-l border-white/5 flex items-center justify-center bg-[radial-gradient(circle_at_center,rgba(204,88,51,0.1)_0%,transparent_70%)] overflow-hidden">
-                        <div class="grid grid-cols-8 gap-4 opacity-30" id="dot-grid">
-                            <!-- JS will populate dots -->
+                    <div class="w-full md:w-1/2 h-full relative border-l border-[#D9D9D9]/10 overflow-hidden">
+                        <img src="img/naturereserve tree.png" alt="Ancient Wonderboom tree" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,91,51,0.16)_0%,rgba(100,117,107,0.45)_100%)]"></div>
+                        <div class="absolute left-0 w-full h-[2px] bg-[#C85B33] shadow-[0_0_15px_#C85B33] animate-scan z-10"></div>
+                        <div class="absolute bottom-8 left-8 right-8 rounded-[1.75rem] bg-[#40531F]/35 backdrop-blur-sm border border-[#D9D9D9]/15 p-5">
+                            <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#D9D9D9]/60 mb-2">Living Legacy</div>
+                            <div class="font-['Plus_Jakarta_Sans'] text-sm text-[#D9D9D9]/80">The Wonderboom's branching circles tell the story of fire, recovery, and remarkable natural resilience.</div>
                         </div>
-                        <div class="absolute left-0 w-full h-[2px] bg-[#CC5833] shadow-[0_0_15px_#CC5833] animate-scan z-10"></div>
                     </div>
                 </div>
             </div>
 
             <!-- Card 3 -->
             <div class="protocol-card sticky top-0 h-[100dvh] flex items-center justify-center p-4 md:p-8">
-                <div class="card-inner w-full max-w-6xl h-[85vh] md:h-[80vh] bg-[#F2F0E9] text-[#1A1A1A] rounded-[3rem] md:rounded-[4rem] overflow-hidden relative flex flex-col md:flex-row shadow-2xl border border-[#1A1A1A]/10" style="transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear;">
+                <div class="card-inner w-full max-w-6xl h-[85vh] md:h-[80vh] bg-[#B5B241] text-[#40531F] rounded-[3rem] md:rounded-[4rem] overflow-hidden relative flex flex-col md:flex-row shadow-2xl border border-[#40531F]/10" style="transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear;">
                     <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center z-10">
                         <span class="font-['JetBrains_Mono'] uppercase tracking-widest text-sm mb-6 opacity-60">Chapter 03</span>
                         <h3 class="font-['Outfit'] font-bold text-4xl md:text-6xl mb-6 leading-tight">Explore the Reserve</h3>
                         <p class="font-['Plus_Jakarta_Sans'] text-lg md:text-xl opacity-80 leading-relaxed max-w-md">Today, visitors can hire the Wonderboom Lapa, embark on guided day hikes, or participate in environmental education programs.</p>
                     </div>
-                    <div class="w-full md:w-1/2 h-full relative border-l border-white/5 flex items-center justify-center">
-                        <div class="absolute inset-0 grid grid-cols-[repeat(20,minmax(0,1fr))] opacity-[0.03]" id="line-grid">
-                            <!-- JS will populate lines -->
+                    <div class="w-full md:w-1/2 h-full relative border-l border-[#40531F]/10 overflow-hidden">
+                        <img src="img/kids hiking.png" alt="Visitors hiking in Wonderboom Nature Reserve" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#B5B241] via-transparent to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 right-8 rounded-[1.75rem] bg-[#D9D9D9]/75 backdrop-blur-sm border border-[#40531F]/10 p-5">
+                            <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#40531F]/55 mb-2">Family Trails</div>
+                            <div class="font-['Plus_Jakarta_Sans'] text-sm text-[#40531F]/80">Guided walks and short trail adventures make the reserve accessible for families, schools, and day visitors.</div>
                         </div>
-                        <i data-lucide="compass" class="w-[120px] h-[120px] text-[#CC5833] opacity-80" stroke-width="1"></i>
                     </div>
                 </div>
             </div>
 
         </section>
 
+        <!-- Weather Section -->
+        <section id="weather" class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="mb-14">
+                <span class="font-['JetBrains_Mono'] uppercase tracking-widest text-xs text-[#C85B33] mb-4 block">05 // Weather Desk</span>
+                <h2 class="font-['Cormorant_Garamond'] italic text-5xl md:text-7xl text-[#255EA1] mb-4">Check The Conditions Before You Climb</h2>
+                <p class="font-['Plus_Jakarta_Sans'] text-lg text-[#40531F]/70 max-w-2xl">
+                    A weather snapshot for planning hikes, viewpoints, and family visits around Wonderboom Nature Reserve.
+                </p>
+            </div>
+
+            <div class="rounded-[3rem] p-5 md:p-8 bg-[linear-gradient(135deg,rgba(37,94,161,0.95),rgba(100,117,107,0.96))] shadow-[0_24px_80px_rgba(37,94,161,0.18)] border border-[#D9D9D9]/15">
+                <div class="grid grid-cols-1 xl:grid-cols-[0.95fr_1.1fr_0.8fr] gap-6">
+                    <div class="space-y-6">
+                        <div class="weather-card-loop rounded-[2.5rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/10 p-7 text-[#D9D9D9] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                            <div class="flex items-start justify-between mb-8">
+                                <div>
+                                    <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#D9D9D9]/60 mb-2">Now</div>
+                                    <div id="weather-current-temp" class="font-['Outfit'] text-6xl font-bold leading-none">--°</div>
+                                </div>
+                                <div class="weather-icon-loop w-16 h-16 rounded-full bg-[#B4B514]/20 flex items-center justify-center">
+                                    <div id="weather-current-icon" class="w-8 h-8 text-[#B4B514]"></div>
+                                </div>
+                            </div>
+                            <div id="weather-current-label" class="text-lg font-medium mb-2">Loading current conditions...</div>
+                            <div id="weather-current-summary" class="text-sm text-[#D9D9D9]/70 mb-6">Fetching the latest reserve forecast.</div>
+                            <div class="grid grid-cols-3 gap-3 pt-5 border-t border-[#D9D9D9]/10 text-sm">
+                                <div>
+                                    <div class="text-[#D9D9D9]/50 mb-1">Feels like</div>
+                                    <div id="weather-feels-like" class="font-semibold">--°</div>
+                                </div>
+                                <div>
+                                    <div class="text-[#D9D9D9]/50 mb-1">Humidity</div>
+                                    <div id="weather-humidity" class="font-semibold">--%</div>
+                                </div>
+                                <div>
+                                    <div class="text-[#D9D9D9]/50 mb-1">Wind</div>
+                                    <div id="weather-wind" class="font-semibold">-- km/h</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="weather-card-loop-delayed rounded-[1.75rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/10 p-4 flex flex-col items-center justify-center text-[#D9D9D9]">
+                                <i data-lucide="umbrella" class="w-6 h-6 text-[#D9D9D9] mb-2"></i>
+                                <span class="font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest text-[#D9D9D9]/70">Rain</span>
+                                <span id="weather-rain" class="font-semibold mt-1">--%</span>
+                            </div>
+                            <div class="weather-card-loop rounded-[1.75rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/10 p-4 flex flex-col items-center justify-center text-[#D9D9D9]">
+                                <i data-lucide="droplets" class="w-6 h-6 text-[#D9D9D9] mb-2"></i>
+                                <span class="font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest text-[#D9D9D9]/70">Moisture</span>
+                                <span id="weather-moisture" class="font-semibold mt-1">--</span>
+                            </div>
+                            <div class="weather-card-loop-delayed rounded-[1.75rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/10 p-4 flex flex-col items-center justify-center text-[#D9D9D9]">
+                                <i data-lucide="wind" class="w-6 h-6 text-[#D9D9D9] mb-2"></i>
+                                <span class="font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest text-[#D9D9D9]/70">Breeze</span>
+                                <span id="weather-breeze" class="font-semibold mt-1">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="weather-card-loop-delayed rounded-[2.5rem] bg-[#255EA1]/55 backdrop-blur-sm border border-[#D9D9D9]/10 p-6 md:p-7 text-[#D9D9D9]">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#D9D9D9]/60 mb-2">7 Day Outlook</div>
+                                <div class="font-['Outfit'] text-3xl font-bold">Reserve Forecast</div>
+                            </div>
+                            <div class="text-sm text-[#D9D9D9]/60">Best for planning hikes</div>
+                        </div>
+                        <div id="weather-daily-list" class="space-y-3"></div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="weather-card-loop rounded-[2rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/10 p-5 text-[#D9D9D9]">
+                                <div class="flex items-center justify-between mb-6">
+                                    <span class="font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest text-[#D9D9D9]/60">Sunrise</span>
+                                    <i data-lucide="sunrise" class="w-5 h-5 text-[#B4B514]"></i>
+                                </div>
+                                <div id="weather-sunrise" class="font-['Outfit'] text-3xl font-bold">--:--</div>
+                                <div class="text-sm text-[#D9D9D9]/65 mt-2">Soft morning light on the trail.</div>
+                            </div>
+                            <div class="weather-card-loop-delayed rounded-[2rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/10 p-5 text-[#D9D9D9]">
+                                <div class="flex items-center justify-between mb-6">
+                                    <span class="font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest text-[#D9D9D9]/60">Sunset</span>
+                                    <i data-lucide="sunset" class="w-5 h-5 text-[#C85B33]"></i>
+                                </div>
+                                <div id="weather-sunset" class="font-['Outfit'] text-3xl font-bold">--:--</div>
+                                <div class="text-sm text-[#D9D9D9]/65 mt-2">Golden-hour views across Pretoria.</div>
+                            </div>
+                            <div class="weather-card-loop-delayed rounded-[2rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/10 p-5 text-[#D9D9D9]">
+                                <div class="flex items-center justify-between mb-6">
+                                    <span class="font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest text-[#D9D9D9]/60">Trail Note</span>
+                                    <i data-lucide="bug" class="w-5 h-5 text-[#B5B241]"></i>
+                                </div>
+                                <div id="weather-trail-note" class="font-semibold text-lg">Checking conditions</div>
+                                <div id="weather-trail-note-copy" class="text-sm text-[#D9D9D9]/65 mt-2">Loading an up-to-date note for trail visitors.</div>
+                            </div>
+                            <div class="weather-card-loop rounded-[2rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/10 p-5 text-[#D9D9D9]">
+                                <div class="flex items-center justify-between mb-6">
+                                    <span class="font-['JetBrains_Mono'] text-[11px] uppercase tracking-widest text-[#D9D9D9]/60">Trail Feel</span>
+                                    <i data-lucide="footprints" class="w-5 h-5 text-[#D9D9D9]"></i>
+                                </div>
+                                <div id="weather-trail-feel" class="font-semibold text-lg">Loading</div>
+                                <div id="weather-trail-feel-copy" class="text-sm text-[#D9D9D9]/65 mt-2">Assessing likely footing and comfort for reserve visitors.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weather-card-loop mt-6 rounded-[2.5rem] bg-[#D9D9D9]/10 backdrop-blur-sm border border-[#D9D9D9]/10 p-5 md:p-6 text-[#D9D9D9]">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
+                        <div>
+                            <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#D9D9D9]/60 mb-2">Hourly Window</div>
+                            <div class="font-['Outfit'] text-2xl font-bold">Late Afternoon Outlook</div>
+                        </div>
+                        <div class="text-sm text-[#D9D9D9]/65">Best time to catch the light over the reserve</div>
+                    </div>
+                    <div id="weather-hourly-list" class="grid grid-cols-3 md:grid-cols-6 gap-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hiking Trail Section -->
+        <section id="trail" class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-start">
+                <div>
+                    <span class="font-['JetBrains_Mono'] uppercase tracking-widest text-xs text-[#C85B33] mb-4 block">05 // Trail Guide</span>
+                    <h2 class="font-['Cormorant_Garamond'] italic text-5xl md:text-7xl text-[#255EA1] mb-6">Wonderboom Hiking Trail</h2>
+                    <p class="font-['Plus_Jakarta_Sans'] text-lg text-[#40531F]/75 max-w-2xl leading-relaxed mb-8">
+                        A moderate 4 km loop with about 204 m of elevation gain. The route is short but includes a fairly steep climb toward Fort Wonderboompoort, making it a rewarding family-friendly adventure with elevated views across the reserve.
+                    </p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-[#D9D9D9] rounded-[2rem] p-5 border border-[#40531F]/10">
+                            <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#40531F]/50 mb-2">Rating</div>
+                            <div class="font-['Outfit'] text-3xl font-bold text-[#40531F]">4.4</div>
+                            <div class="text-sm text-[#40531F]/60">83 reviews</div>
+                        </div>
+                        <div class="bg-[#D9D9D9] rounded-[2rem] p-5 border border-[#40531F]/10">
+                            <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#40531F]/50 mb-2">Length</div>
+                            <div class="font-['Outfit'] text-3xl font-bold text-[#40531F]">4 km</div>
+                            <div class="text-sm text-[#40531F]/60">Loop trail</div>
+                        </div>
+                        <div class="bg-[#D9D9D9] rounded-[2rem] p-5 border border-[#40531F]/10">
+                            <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#40531F]/50 mb-2">Climb</div>
+                            <div class="font-['Outfit'] text-3xl font-bold text-[#40531F]">204 m</div>
+                            <div class="text-sm text-[#40531F]/60">Elevation gain</div>
+                        </div>
+                        <div class="bg-[#255EA1] rounded-[2rem] p-5 border border-[#255EA1] text-[#D9D9D9]">
+                            <div class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#D9D9D9]/60 mb-2">Difficulty</div>
+                            <div class="font-['Outfit'] text-3xl font-bold">Moderate</div>
+                            <div class="text-sm text-[#D9D9D9]/70">Short, steep sections</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#B5B241] rounded-[3rem] p-8 border border-[#40531F]/10">
+                        <h3 class="font-['Outfit'] text-2xl font-bold text-[#40531F] mb-4">What To Expect</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm md:text-base text-[#40531F]/80 font-['Plus_Jakarta_Sans']">
+                            <div>
+                                <p class="mb-3">Reviewers consistently mention beautiful views, well-built paths, rocky terrain, and historical points of interest along the climb.</p>
+                                <p>It is a solid option for hikers who want a shorter outing with caves, forest sections, and a bit of scrambling.</p>
+                            </div>
+                            <div>
+                                <p class="mb-3">The biggest caution is navigation: trail signage can be unclear, so downloading a route map ahead of time is a smart move.</p>
+                                <p>Bring water, expect some steep inclines, and help keep the reserve clean by packing out your trash.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                        <div class="rounded-[2.4rem] overflow-hidden border border-[#40531F]/10 shadow-xl">
+                            <img src="img/strating trail.png" alt="Start of the Wonderboom trail" class="w-full h-[260px] object-cover">
+                        </div>
+                        <div class="rounded-[2.4rem] overflow-hidden border border-[#40531F]/10 shadow-xl">
+                            <img src="img/map.png" alt="Map of Wonderboom Nature Reserve trail area" class="w-full h-[260px] object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-[#D9D9D9] rounded-[3rem] p-4 border border-[#40531F]/10 overflow-hidden">
+                        <img src="img/hikingview4.png" alt="Wonderboom trail lookout" class="w-full h-[240px] object-cover rounded-[2.25rem]">
+                    </div>
+
+                    <div class="bg-[#40531F] text-[#D9D9D9] rounded-[3rem] p-8 border border-[#40531F]">
+                        <h3 class="font-['Outfit'] text-2xl font-bold mb-5">Top Sights On The Route</h3>
+                        <div class="space-y-4 font-['Plus_Jakarta_Sans']">
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="landmark" class="w-5 h-5 text-[#C85B33] mt-1 shrink-0"></i>
+                                <div>
+                                    <div class="font-semibold">Fort Wonderboompoort</div>
+                                    <div class="text-sm text-[#D9D9D9]/70">A historic lookout point reached by the steeper climb.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="waves" class="w-5 h-5 text-[#C85B33] mt-1 shrink-0"></i>
+                                <div>
+                                    <div class="font-semibold">Wonderboom Waterfall</div>
+                                    <div class="text-sm text-[#D9D9D9]/70">A natural highlight that adds variety to the route.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="mountain" class="w-5 h-5 text-[#C85B33] mt-1 shrink-0"></i>
+                                <div>
+                                    <div class="font-semibold">Wonderboom Cave</div>
+                                    <div class="text-sm text-[#D9D9D9]/70">One of the memorable terrain features on the trail experience.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#D9D9D9] rounded-[3rem] p-8 border border-[#40531F]/10">
+                        <h3 class="font-['Outfit'] text-2xl font-bold text-[#40531F] mb-5">Trail Planning Notes</h3>
+                        <div class="space-y-3 text-[#40531F]/75 font-['Plus_Jakarta_Sans']">
+                            <div class="flex items-center gap-3"><i data-lucide="users" class="w-4 h-4 text-[#697018]"></i><span>Family-friendly for active visitors comfortable with short climbs.</span></div>
+                            <div class="flex items-center gap-3"><i data-lucide="map" class="w-4 h-4 text-[#697018]"></i><span>Navigation can be tricky because the route is not always well signed.</span></div>
+                            <div class="flex items-center gap-3"><i data-lucide="car" class="w-4 h-4 text-[#697018]"></i><span>Recent hikers report easy parking and access to bathrooms.</span></div>
+                            <div class="flex items-center gap-3"><i data-lucide="backpack" class="w-4 h-4 text-[#697018]"></i><span>Bring water, download the map ahead of time, and expect rocky sections.</span></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="rounded-[2.2rem] overflow-hidden border border-[#40531F]/10 shadow-lg">
+                            <img src="img/impala.png" alt="Impala in Wonderboom Nature Reserve" class="w-full h-[180px] object-cover">
+                        </div>
+                        <div class="rounded-[2.2rem] overflow-hidden border border-[#40531F]/10 shadow-lg">
+                            <img src="img/horse.png" alt="Horse near Wonderboom Nature Reserve trail" class="w-full h-[180px] object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Tariffs Section -->
         <section id="tariffs" class="py-24 px-6 max-w-7xl mx-auto">
             <div class="text-center mb-20">
-                <h2 class="font-['Cormorant_Garamond'] italic text-5xl md:text-7xl text-[#2E4036] mb-6">Entry Tariffs & Fees.</h2>
-                <p class="font-['Plus_Jakarta_Sans'] text-lg text-[#1A1A1A]/60 max-w-xl mx-auto">
+                <h2 class="font-['Cormorant_Garamond'] italic text-5xl md:text-7xl text-[#255EA1] mb-6">Entry Tariffs & Fees.</h2>
+                <p class="font-['Plus_Jakarta_Sans'] text-lg text-[#40531F]/60 max-w-xl mx-auto">
                     Access the sanctuary. Preserve the heritage.
                 </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
                 <!-- Base Pass -->
-                <div class="bg-white rounded-[3rem] p-10 border border-[#1A1A1A]/10 text-center">
+                <div class="bg-[#D9D9D9] rounded-[3rem] p-10 border border-[#40531F]/10 text-center">
                     <h3 class="font-['Outfit'] font-bold text-2xl mb-2">Day Pass</h3>
-                    <div class="font-['Plus_Jakarta_Sans'] text-4xl font-semibold mb-6">R47<span class="text-lg text-[#1A1A1A]/50 font-normal">/adult</span></div>
-                    <ul class="text-left space-y-4 mb-8 font-['Plus_Jakarta_Sans'] text-sm text-[#1A1A1A]/70">
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> R31.50 Pensioners / Disabled</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> R31.50 Schoolchildren (7-17)</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> R21.00 Preschool (2-6)</li>
+                    <div class="font-['Plus_Jakarta_Sans'] text-4xl font-semibold mb-6">R47<span class="text-lg text-[#40531F]/50 font-normal">/adult</span></div>
+                    <ul class="text-left space-y-4 mb-8 font-['Plus_Jakarta_Sans'] text-sm text-[#40531F]/70">
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> R31.50 Pensioners / Disabled</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> R31.50 Schoolchildren (7-17)</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> R21.00 Preschool (2-6)</li>
                     </ul>
                     <button class="magnetic-btn w-full btn-outline">
                         <span class="magnetic-btn-content">Buy Day Pass</span>
@@ -423,17 +726,17 @@
                 </div>
 
                 <!-- Guided Hike -->
-                <div class="bg-[#2E4036] text-white rounded-[3rem] p-12 border border-[#2E4036] text-center shadow-2xl relative transform md:-translate-y-4">
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#CC5833] text-white px-4 py-1 rounded-full font-['JetBrains_Mono'] text-xs uppercase tracking-wider">
+                <div class="bg-[#255EA1] text-[#D9D9D9] rounded-[3rem] p-12 border border-[#255EA1] text-center shadow-2xl relative transform md:-translate-y-4">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#C85B33] text-[#D9D9D9] px-4 py-1 rounded-full font-['JetBrains_Mono'] text-xs uppercase tracking-wider">
                         Most Popular
                     </div>
                     <h3 class="font-['Outfit'] font-bold text-2xl mb-2">Guided Day Hike</h3>
-                    <div class="font-['Plus_Jakarta_Sans'] text-5xl font-semibold mb-6">R100<span class="text-lg text-white/50 font-normal">/person</span></div>
-                    <ul class="text-left space-y-4 mb-8 font-['Plus_Jakarta_Sans'] text-sm text-white/80">
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> Approx. 4 hour trail</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> Expert guide included</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> Must book 14 days in advance</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> Group discounts available</li>
+                    <div class="font-['Plus_Jakarta_Sans'] text-5xl font-semibold mb-6">R100<span class="text-lg text-[#D9D9D9]/50 font-normal">/person</span></div>
+                    <ul class="text-left space-y-4 mb-8 font-['Plus_Jakarta_Sans'] text-sm text-[#D9D9D9]/80">
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> Approx. 4 hour trail</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> Expert guide included</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> Must book 14 days in advance</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> Group discounts available</li>
                     </ul>
                     <button class="magnetic-btn w-full btn-clay">
                         <span class="magnetic-btn-content">Book Guide</span>
@@ -442,13 +745,13 @@
                 </div>
 
                 <!-- Annual Access -->
-                <div class="bg-white rounded-[3rem] p-10 border border-[#1A1A1A]/10 text-center">
+                <div class="bg-[#D9D9D9] rounded-[3rem] p-10 border border-[#40531F]/10 text-center">
                     <h3 class="font-['Outfit'] font-bold text-2xl mb-2">Annual Access</h3>
-                    <div class="font-['Plus_Jakarta_Sans'] text-4xl font-semibold mb-6">R840<span class="text-lg text-[#1A1A1A]/50 font-normal">/adult</span></div>
-                    <ul class="text-left space-y-4 mb-8 font-['Plus_Jakarta_Sans'] text-sm text-[#1A1A1A]/70">
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> Maximum 18 visits/year</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> R588 Pensioners/Disabled</li>
-                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#CC5833]"></i> R446 Schoolchildren</li>
+                    <div class="font-['Plus_Jakarta_Sans'] text-4xl font-semibold mb-6">R840<span class="text-lg text-[#40531F]/50 font-normal">/adult</span></div>
+                    <ul class="text-left space-y-4 mb-8 font-['Plus_Jakarta_Sans'] text-sm text-[#40531F]/70">
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> Maximum 18 visits/year</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> R588 Pensioners/Disabled</li>
+                        <li class="flex items-center gap-3"><i data-lucide="check" class="w-4 h-4 text-[#C85B33]"></i> R446 Schoolchildren</li>
                     </ul>
                     <button class="magnetic-btn w-full btn-outline">
                         <span class="magnetic-btn-content">Purchase Annual</span>
@@ -457,54 +760,57 @@
                 </div>
             </div>
             
-            <div class="mt-12 text-center text-sm font-['Plus_Jakarta_Sans'] text-[#1A1A1A]/60 flex flex-col md:flex-row justify-center gap-6">
-                <span><strong class="text-[#1A1A1A]">Lapa Hire:</strong> R2,625 (or R241.50/hr max 4 hours) + 40% Deposit</span>
-                <span><strong class="text-[#1A1A1A]">Bus Parking:</strong> R535.50 (Minibus) to R4,200 (Double-decker)</span>
+            <div class="mt-12 text-center text-sm font-['Plus_Jakarta_Sans'] text-[#40531F]/60 flex flex-col md:flex-row justify-center gap-6">
+                <span><strong class="text-[#40531F]">Lapa Hire:</strong> R2,625 (or R241.50/hr max 4 hours) + 40% Deposit</span>
+                <span><strong class="text-[#40531F]">Bus Parking:</strong> R535.50 (Minibus) to R4,200 (Double-decker)</span>
             </div>
         </section>
 
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#1A1A1A] text-white pt-24 pb-8 px-6 rounded-t-[4rem] relative z-20 mt-12">
+    <footer class="bg-[#40531F] text-[#D9D9D9] pt-24 pb-8 px-6 rounded-t-[4rem] relative z-20 mt-12">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start mb-20 gap-12">
             <div class="max-w-sm">
-                <div class="flex items-center gap-2 mb-6">
-                    <i data-lucide="leaf" class="w-8 h-8 text-[#CC5833]"></i>
-                    <span class="font-['Outfit'] font-bold text-3xl tracking-tighter">WONDERBOOM</span>
+                <div class="mb-6">
+                    <img
+                        src="https://res.cloudinary.com/dgwtaivvf/image/upload/v1773396465/wblogo_sv29cf.png"
+                        alt="Wonderboom Nature Reserve logo"
+                        class="h-16 w-auto object-contain"
+                    >
                 </div>
-                <p class="font-['Plus_Jakarta_Sans'] text-white/50 text-sm leading-relaxed mb-8">
+                <p class="font-['Plus_Jakarta_Sans'] text-[#D9D9D9]/50 text-sm leading-relaxed mb-8">
                     Situated in the northern part of Tshwane and straddling the Magaliesberg. A 200-hectare reserve famous for its magnificent Ficus salicifolia.
                 </p>
-                <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 w-fit">
-                    <i data-lucide="clock" class="w-[14px] h-[14px] text-green-500"></i>
-                    <span class="font-['JetBrains_Mono'] text-xs text-white/70 uppercase tracking-widest">07:00 - 17:00 Daily</span>
+                <div class="flex items-center gap-3 px-4 py-2 rounded-full bg-[#D9D9D9]/5 border border-[#D9D9D9]/10 w-fit">
+                    <i data-lucide="clock" class="w-[14px] h-[14px] text-[#B4B514]"></i>
+                    <span class="font-['JetBrains_Mono'] text-xs text-[#D9D9D9]/70 uppercase tracking-widest">07:00 - 17:00 Daily</span>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 font-['Plus_Jakarta_Sans'] text-sm">
                 <div class="flex flex-col gap-4">
-                    <span class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#CC5833] mb-2">Activities</span>
-                    <a href="#" class="text-white/70 hover:text-white transition-colors">Guided Hikes</a>
-                    <a href="#" class="text-white/70 hover:text-white transition-colors">Wonderboom Lapa</a>
-                    <a href="#" class="text-white/70 hover:text-white transition-colors">Environmental Ed.</a>
+                    <span class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#C85B33] mb-2">Activities</span>
+                    <a href="#" class="text-[#D9D9D9]/70 hover:text-[#D9D9D9] transition-colors">Guided Hikes</a>
+                    <a href="#" class="text-[#D9D9D9]/70 hover:text-[#D9D9D9] transition-colors">Wonderboom Lapa</a>
+                    <a href="#" class="text-[#D9D9D9]/70 hover:text-[#D9D9D9] transition-colors">Environmental Ed.</a>
                 </div>
                 <div class="flex flex-col gap-4">
-                    <span class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#CC5833] mb-2">Contact</span>
-                    <span class="text-white/70">Tel: 012 358 1792</span>
-                    <span class="text-white/70">wonderboom@tshwane.gov.za</span>
-                    <span class="text-white/70">PO Box 1454, Pretoria, 0001</span>
+                    <span class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#C85B33] mb-2">Contact</span>
+                    <span class="text-[#D9D9D9]/70">Tel: 012 358 1792</span>
+                    <span class="text-[#D9D9D9]/70">wonderboom@tshwane.gov.za</span>
+                    <span class="text-[#D9D9D9]/70">PO Box 1454, Pretoria, 0001</span>
                 </div>
                 <div class="flex flex-col gap-4">
-                    <span class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#CC5833] mb-2">Information</span>
-                    <a href="http://www.tshwane.gov.za/wonderboom.cfm" target="_blank" rel="noreferrer" class="text-white/70 hover:text-white transition-colors">Official Website</a>
-                    <span class="text-white/70">Last Entry: 16:00</span>
-                    <span class="text-white/70">Coords: S25 41 202 E028 11 384</span>
+                    <span class="font-['JetBrains_Mono'] text-xs uppercase tracking-widest text-[#C85B33] mb-2">Information</span>
+                    <a href="http://www.tshwane.gov.za/wonderboom.cfm" target="_blank" rel="noreferrer" class="text-[#D9D9D9]/70 hover:text-[#D9D9D9] transition-colors">Official Website</a>
+                    <span class="text-[#D9D9D9]/70">Last Entry: 16:00</span>
+                    <span class="text-[#D9D9D9]/70">Coords: S25 41 202 E028 11 384</span>
                 </div>
             </div>
         </div>
         
-        <div class="max-w-7xl mx-auto border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-['JetBrains_Mono'] text-white/30">
+        <div class="max-w-7xl mx-auto border-t border-[#D9D9D9]/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-['JetBrains_Mono'] text-[#D9D9D9]/30">
             <p>&copy; <span id="year"></span> Wonderboom Nature Reserve, Tshwane. All rights reserved.</p>
             <p>Preserving the 1,000-year legacy.</p>
         </div>
@@ -517,33 +823,268 @@
         lucide.createIcons();
         const lerp = (start, end, factor) => start * (1 - factor) + end * factor;
         const clamp = (min, max, value) => Math.max(min, Math.min(max, value));
+        const WONDERBOOM_COORDS = { latitude: -25.6889, longitude: 28.1824 };
+
+        function formatTemp(value) {
+            return `${Math.round(value)}°`;
+        }
+
+        function formatTime(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+        }
+
+        function formatHourLabel(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleTimeString([], { hour: 'numeric' }).toLowerCase();
+        }
+
+        function formatDayLabel(isoString) {
+            return new Date(isoString).toLocaleDateString([], { weekday: 'short' });
+        }
+
+        function humidityLabel(value) {
+            if (value >= 75) return 'High';
+            if (value >= 50) return 'Moderate';
+            return 'Dry';
+        }
+
+        function breezeLabel(value) {
+            if (value >= 25) return 'Brisk';
+            if (value >= 15) return 'Steady';
+            return 'Light';
+        }
+
+        function trailNoteFromWeather(current, dailyRainChance) {
+            if (dailyRainChance >= 60) {
+                return {
+                    title: 'Rain likely on trail',
+                    copy: 'Expect wetter sections and take extra care on the steeper stone paths.'
+                };
+            }
+
+            if (current.relative_humidity_2m >= 75) {
+                return {
+                    title: 'Humid hiking window',
+                    copy: 'Pack water and pace the climb, especially through exposed stretches.'
+                };
+            }
+
+            return {
+                title: 'Good hiking conditions',
+                copy: 'Comfortable reserve weather for viewpoints, cave stops, and family walks.'
+            };
+        }
+
+        function trailFeelFromWeather(current, dailyRainChance) {
+            if (dailyRainChance >= 60) {
+                return {
+                    title: 'Potentially slick terrain',
+                    copy: 'Grippy shoes are a must if showers move through the reserve.'
+                };
+            }
+
+            if (current.wind_speed_10m >= 20) {
+                return {
+                    title: 'Breezy on the ridge',
+                    copy: 'Expect stronger gusts near exposed viewpoints and fort sections.'
+                };
+            }
+
+            return {
+                title: 'Dry to firm footing',
+                copy: 'Trail surfaces should feel manageable, though rocky sections still need care.'
+            };
+        }
+
+        function getWeatherPresentation(code, isDay = true) {
+            const map = {
+                0: { label: 'Clear skies', icon: isDay ? 'sun' : 'moon-star' },
+                1: { label: 'Mostly clear', icon: isDay ? 'sun' : 'moon-star' },
+                2: { label: 'Partly cloudy', icon: 'cloud-sun' },
+                3: { label: 'Overcast', icon: 'cloud' },
+                45: { label: 'Foggy', icon: 'cloud-fog' },
+                48: { label: 'Foggy', icon: 'cloud-fog' },
+                51: { label: 'Light drizzle', icon: 'cloud-drizzle' },
+                53: { label: 'Drizzle', icon: 'cloud-drizzle' },
+                55: { label: 'Dense drizzle', icon: 'cloud-drizzle' },
+                56: { label: 'Freezing drizzle', icon: 'cloud-drizzle' },
+                57: { label: 'Freezing drizzle', icon: 'cloud-drizzle' },
+                61: { label: 'Light rain', icon: 'cloud-rain' },
+                63: { label: 'Rain showers', icon: 'cloud-rain' },
+                65: { label: 'Heavy rain', icon: 'cloud-rain' },
+                66: { label: 'Freezing rain', icon: 'cloud-rain' },
+                67: { label: 'Freezing rain', icon: 'cloud-rain' },
+                71: { label: 'Light snow', icon: 'cloud-snow' },
+                73: { label: 'Snow', icon: 'cloud-snow' },
+                75: { label: 'Heavy snow', icon: 'cloud-snow' },
+                77: { label: 'Snow grains', icon: 'cloud-snow' },
+                80: { label: 'Rain showers', icon: 'cloud-rain' },
+                81: { label: 'Rain showers', icon: 'cloud-rain' },
+                82: { label: 'Heavy showers', icon: 'cloud-rain' },
+                85: { label: 'Snow showers', icon: 'cloud-snow' },
+                86: { label: 'Snow showers', icon: 'cloud-snow' },
+                95: { label: 'Thunderstorms', icon: 'cloud-lightning' },
+                96: { label: 'Storm risk', icon: 'cloud-lightning' },
+                99: { label: 'Storm risk', icon: 'cloud-lightning' }
+            };
+
+            return map[code] || { label: 'Changing conditions', icon: 'cloud' };
+        }
+
+        function renderWeatherIcon(target, iconName, iconClasses) {
+            if (!target || !lucide.icons[iconName]) return;
+            target.innerHTML = lucide.icons[iconName].toSvg({
+                class: iconClasses,
+                'stroke-width': 1.75
+            });
+        }
+
+        function renderDailyWeather(daily) {
+            const list = document.getElementById('weather-daily-list');
+            if (!list) return;
+
+            list.innerHTML = daily.time.map((time, index) => {
+                const presentation = getWeatherPresentation(daily.weather_code[index], true);
+                const rowClass = index === 0 ? 'bg-[#D9D9D9]/8 weather-row-loop' : 'weather-row-loop';
+                return `
+                    <div class="grid grid-cols-[40px_1fr_auto_auto] items-center gap-4 rounded-[1.4rem] px-4 py-3 ${rowClass}">
+                        <span class="font-['JetBrains_Mono'] text-sm">${formatDayLabel(time)}</span>
+                        <div class="w-5 h-5 text-[#D9D9D9]" data-daily-icon="${presentation.icon}"></div>
+                        <span class="font-semibold">${formatTemp(daily.temperature_2m_max[index])}</span>
+                        <span class="text-[#D9D9D9]/65">${formatTemp(daily.temperature_2m_min[index])}</span>
+                    </div>
+                `;
+            }).join('');
+
+            list.querySelectorAll('[data-daily-icon]').forEach((node) => {
+                renderWeatherIcon(node, node.dataset.dailyIcon, 'w-5 h-5 weather-icon-loop');
+            });
+        }
+
+        function renderHourlyWeather(hourly) {
+            const list = document.getElementById('weather-hourly-list');
+            if (!list) return;
+
+            const cards = hourly.time.map((time, index) => {
+                const presentation = getWeatherPresentation(hourly.weather_code[index], true);
+                const isHighlight = index === 3;
+                const cardClass = isHighlight
+                    ? 'weather-highlight-loop rounded-[1.6rem] bg-[#D9D9D9] text-[#40531F] px-4 py-4 text-center shadow-[0_16px_36px_rgba(0,0,0,0.16)]'
+                    : 'weather-card-loop rounded-[1.6rem] bg-[#D9D9D9]/8 px-4 py-4 text-center';
+                const iconColor = isHighlight ? 'text-[#C85B33]' : (presentation.icon === 'sun' ? 'text-[#B4B514]' : 'text-[#D9D9D9]');
+                const labelColor = isHighlight ? 'text-[#40531F]/55' : 'text-[#D9D9D9]/60';
+
+                return `
+                    <div class="${cardClass}">
+                        <div class="font-['JetBrains_Mono'] text-xs ${labelColor} mb-3">${formatHourLabel(time)}</div>
+                        <div class="mx-auto mb-3 ${iconColor}" data-hourly-icon="${presentation.icon}"></div>
+                        <div class="font-semibold">${formatTemp(hourly.temperature_2m[index])}</div>
+                    </div>
+                `;
+            }).join('');
+
+            list.innerHTML = cards;
+            list.querySelectorAll('[data-hourly-icon]').forEach((node) => {
+                const colorClass = node.className.includes('text-[#C85B33]')
+                    ? 'w-5 h-5 weather-icon-loop text-[#C85B33]'
+                    : node.className.includes('text-[#B4B514]')
+                        ? 'w-5 h-5 weather-icon-loop text-[#B4B514]'
+                        : 'w-5 h-5 weather-icon-loop text-[#D9D9D9]';
+                renderWeatherIcon(node, node.dataset.hourlyIcon, colorClass);
+            });
+        }
+
+        async function loadWeather() {
+            const endpoint = new URL('https://api.open-meteo.com/v1/forecast');
+            endpoint.search = new URLSearchParams({
+                latitude: WONDERBOOM_COORDS.latitude,
+                longitude: WONDERBOOM_COORDS.longitude,
+                current: 'temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m',
+                hourly: 'temperature_2m,weather_code,precipitation_probability',
+                daily: 'weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max',
+                forecast_days: '7',
+                timezone: 'auto'
+            }).toString();
+
+            try {
+                const response = await fetch(endpoint.toString(), { headers: { Accept: 'application/json' } });
+                if (!response.ok) throw new Error(`Weather request failed with ${response.status}`);
+                const data = await response.json();
+
+                const current = data.current;
+                const daily = data.daily;
+                const hourly = data.hourly;
+                const presentation = getWeatherPresentation(current.weather_code, current.is_day === 1);
+                const todayRainChance = daily.precipitation_probability_max[0] ?? 0;
+                const note = trailNoteFromWeather(current, todayRainChance);
+                const feel = trailFeelFromWeather(current, todayRainChance);
+                const currentHourIndex = hourly.time.findIndex((time) => {
+                    const hour = new Date(time);
+                    const now = new Date();
+                    return hour.getHours() >= now.getHours();
+                });
+                const hourlySliceStart = Math.max(currentHourIndex, 0);
+
+                document.getElementById('weather-current-temp').textContent = formatTemp(current.temperature_2m);
+                document.getElementById('weather-current-label').textContent = presentation.label;
+                document.getElementById('weather-current-summary').textContent = `Live conditions near Wonderboom Nature Reserve. Updated for today's hiking window.`;
+                document.getElementById('weather-feels-like').textContent = formatTemp(current.apparent_temperature);
+                document.getElementById('weather-humidity').textContent = `${Math.round(current.relative_humidity_2m)}%`;
+                document.getElementById('weather-wind').textContent = `${Math.round(current.wind_speed_10m)} km/h`;
+                document.getElementById('weather-rain').textContent = `${Math.round(todayRainChance)}%`;
+                document.getElementById('weather-moisture').textContent = humidityLabel(current.relative_humidity_2m);
+                document.getElementById('weather-breeze').textContent = breezeLabel(current.wind_speed_10m);
+                document.getElementById('weather-sunrise').textContent = formatTime(daily.sunrise[0]);
+                document.getElementById('weather-sunset').textContent = formatTime(daily.sunset[0]);
+                document.getElementById('weather-trail-note').textContent = note.title;
+                document.getElementById('weather-trail-note-copy').textContent = note.copy;
+                document.getElementById('weather-trail-feel').textContent = feel.title;
+                document.getElementById('weather-trail-feel-copy').textContent = feel.copy;
+
+                renderWeatherIcon(
+                    document.getElementById('weather-current-icon'),
+                    presentation.icon,
+                    `w-8 h-8 weather-icon-loop ${presentation.icon === 'sun' ? 'text-[#B4B514]' : 'text-[#D9D9D9]'}`
+                );
+
+                renderDailyWeather(daily);
+                renderHourlyWeather({
+                    time: hourly.time.slice(hourlySliceStart, hourlySliceStart + 6),
+                    temperature_2m: hourly.temperature_2m.slice(hourlySliceStart, hourlySliceStart + 6),
+                    weather_code: hourly.weather_code.slice(hourlySliceStart, hourlySliceStart + 6)
+                });
+            } catch (error) {
+                document.getElementById('weather-current-label').textContent = 'Weather temporarily unavailable';
+                document.getElementById('weather-current-summary').textContent = 'The live forecast could not be loaded right now. Please try again shortly.';
+                console.error(error);
+            }
+        }
+
+        loadWeather();
+        setInterval(loadWeather, 30 * 60 * 1000);
 
         // 1. Navbar Logic
         const navbar = document.getElementById('navbar');
-        const navIcon = document.getElementById('nav-icon');
         const navBtn = document.getElementById('nav-btn');
         const navLinks = document.getElementById('nav-links');
 
         window.addEventListener('scroll', () => {
             const scrolled = window.scrollY > 50;
             if (scrolled) {
-                navbar.classList.replace('bg-transparent', 'bg-white/70');
-                navbar.classList.add('backdrop-blur-xl', 'text-[#2E4036]', 'border-white/30', 'shadow-[0_8px_30px_rgb(0,0,0,0.04)]');
-                navbar.classList.remove('text-white', 'border-transparent');
+                navbar.classList.replace('bg-transparent', 'bg-[#D9D9D9]/80');
+                navbar.classList.add('backdrop-blur-xl', 'text-[#40531F]', 'border-[#40531F]/10', 'shadow-[0_8px_30px_rgba(64,83,31,0.08)]');
+                navbar.classList.remove('text-[#D9D9D9]', 'border-transparent');
                 
-                navIcon.classList.replace('text-white', 'text-[#CC5833]');
-                
-                navBtn.classList.replace('bg-white', 'bg-[#2E4036]');
-                navBtn.classList.replace('text-[#1A1A1A]', 'text-white');
+                navBtn.classList.replace('bg-[#D9D9D9]', 'bg-[#255EA1]');
+                navBtn.classList.replace('text-[#40531F]', 'text-[#D9D9D9]');
             } else {
-                navbar.classList.replace('bg-white/70', 'bg-transparent');
-                navbar.classList.remove('backdrop-blur-xl', 'text-[#2E4036]', 'border-white/30', 'shadow-[0_8px_30px_rgb(0,0,0,0.04)]');
-                navbar.classList.add('text-white', 'border-transparent');
+                navbar.classList.replace('bg-[#D9D9D9]/80', 'bg-transparent');
+                navbar.classList.remove('backdrop-blur-xl', 'text-[#40531F]', 'border-[#40531F]/10', 'shadow-[0_8px_30px_rgba(64,83,31,0.08)]');
+                navbar.classList.add('text-[#D9D9D9]', 'border-transparent');
                 
-                navIcon.classList.replace('text-[#CC5833]', 'text-white');
-                
-                navBtn.classList.replace('bg-[#2E4036]', 'bg-white');
-                navBtn.classList.replace('text-white', 'text-[#1A1A1A]');
+                navBtn.classList.replace('bg-[#255EA1]', 'bg-[#D9D9D9]');
+                navBtn.classList.replace('text-[#D9D9D9]', 'text-[#40531F]');
             }
         }, { passive: true });
 
@@ -588,18 +1129,18 @@
         function updateScheduler() {
             // Day 3 (Wednesday) logic
             if (schedulerStep >= 3) {
-                schedulerDays[3].classList.add('bg-[#2E4036]', 'text-white', 'scale-95');
-                schedulerDays[3].classList.remove('text-[#1A1A1A]');
+                schedulerDays[3].classList.add('bg-[#255EA1]', 'text-[#D9D9D9]', 'scale-95');
+                schedulerDays[3].classList.remove('text-[#40531F]');
             } else {
-                schedulerDays[3].classList.remove('bg-[#2E4036]', 'text-white', 'scale-95');
-                schedulerDays[3].classList.add('text-[#1A1A1A]');
+                schedulerDays[3].classList.remove('bg-[#255EA1]', 'text-[#D9D9D9]', 'scale-95');
+                schedulerDays[3].classList.add('text-[#40531F]');
             }
 
             // Button Logic
             if (schedulerStep >= 5) {
-                schedulerBtn.classList.add('bg-[#CC5833]', 'text-white', 'scale-95');
+                schedulerBtn.classList.add('bg-[#C85B33]', 'text-[#D9D9D9]', 'scale-95');
             } else {
-                schedulerBtn.classList.remove('bg-[#CC5833]', 'text-white', 'scale-95');
+                schedulerBtn.classList.remove('bg-[#C85B33]', 'text-[#D9D9D9]', 'scale-95');
             }
 
             // Cursor Logic
@@ -691,18 +1232,22 @@
         
         // Populate dot grid in card 2
         const dotGrid = document.getElementById('dot-grid');
-        for(let i=0; i<64; i++) {
-            const div = document.createElement('div');
-            div.className = `w-2 h-2 rounded-full ${Math.random() > 0.5 ? 'bg-[#CC5833]' : 'bg-white'}`;
-            dotGrid.appendChild(div);
+        if (dotGrid) {
+            for(let i = 0; i < 64; i++) {
+                const div = document.createElement('div');
+                div.className = `w-2 h-2 rounded-full ${Math.random() > 0.5 ? 'bg-[#C85B33]' : 'bg-[#D9D9D9]'}`;
+                dotGrid.appendChild(div);
+            }
         }
 
         // Populate line grid in card 3
         const lineGrid = document.getElementById('line-grid');
-        for(let i=0; i<20; i++) {
-            const div = document.createElement('div');
-            div.className = "border-r border-[#1A1A1A]";
-            lineGrid.appendChild(div);
+        if (lineGrid) {
+            for(let i = 0; i < 20; i++) {
+                const div = document.createElement('div');
+                div.className = "border-r border-[#40531F]";
+                lineGrid.appendChild(div);
+            }
         }
 
         window.addEventListener('scroll', () => {
