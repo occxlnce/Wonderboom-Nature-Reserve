@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wbnaturereserve.netlify.app/sitemap.xml
